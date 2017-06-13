@@ -80,7 +80,8 @@ public class CalculatorService {
             case "+":
             case "-":
             case "*":
-            case "/": {
+            case "/":
+            case "=": {
                 inputOperator(function);
                 break;
             }
@@ -108,6 +109,11 @@ public class CalculatorService {
                 decimalResult = decimalResult.multiply(new BigDecimal(result));
             }
             else if ("/".equals(tempOperator)) {
+                if ("0".equals(result)) {
+                    result = "0으로 나눌 수 없습니다.";
+                    return;
+                }
+
                 decimalResult = decimalResult.divide(new BigDecimal(result),
                         10, BigDecimal.ROUND_DOWN);
             }
@@ -115,9 +121,15 @@ public class CalculatorService {
             result = decimalResult.toString();
         }
 
-        tempResult = "";
-        buffer = tempBuffer + " " + operator;
-        tempOperator = operator;
+        if ("=".equals(operator)) {
+            tempResult = "";
+            buffer = "";
+        }
+        else {
+            tempResult = "";
+            buffer = tempBuffer + " " + operator;
+            tempOperator = operator;
+        }
     }
 
     private void clearAll() {
