@@ -24,14 +24,6 @@ public class CalculatorService {
         textResult.setText(result);
     }
 
-    public String getBuffer() {
-        return buffer;
-    }
-
-    public String getResult() {
-        return result;
-    }
-
     public void inputNumber(int number) {
         if ("0".equals(result)) {
             result = "";
