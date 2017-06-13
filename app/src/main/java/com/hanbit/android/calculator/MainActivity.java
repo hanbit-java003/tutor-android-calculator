@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.hanbit.android.calculator.service.CalculatorService;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -20,12 +22,17 @@ public class MainActivity extends AppCompatActivity {
     private List<Button> btnNumbers;
     private Map<Button, String> btnFunctions;
 
+    private CalculatorService calculatorService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         initViews();
+
+        calculatorService = new CalculatorService(textBuffer, textResult);
+
         initEventHandlers();
     }
 
@@ -81,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
             btnNumber.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    textResult.setText(String.valueOf(number));
+                    calculatorService.inputNumber(number);
                 }
             });
         }
@@ -96,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    textBuffer.setText(btnFunctions.get(view));
+                    calculatorService.inputFunction(btnFunctions.get(view));
                 }
             });
         }
